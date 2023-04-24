@@ -1,29 +1,58 @@
-// In App.js in a new project
-
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Colors from './../constants/Colors';
 import TopTabNavigation from './TopTabNavigation';
+import { Ionicons , MaterialCommunityIcons } from '@expo/vector-icons'; 
 
-function HomeScreen() {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Home Screen</Text>
-        </View>
-);
-}
 
 const Stack = createNativeStackNavigator();
 
-function MainNavigation() {
-return (
-    <NavigationContainer>
-        <Stack.Navigator>
-            <Stack.Screen name="Home" component={TopTabNavigation} />
-        </Stack.Navigator>
-    </NavigationContainer>
-);
+export default function MainNavigation() {
+    return (
+        <NavigationContainer>
+            <RootNavigator/>
+        </NavigationContainer>
+    );
 }
 
-export default MainNavigation;
+function RootNavigator() {
+    return (
+        <Stack.Navigator screenOptions={{
+            headerStyle:{
+                backgroundColor: Colors.light.tint,
+            },
+            headerTitleAlign: 'left',
+            headerTintColor: Colors.light.header,
+            headerTitleStyle: {
+                fontWeight: '500',
+                fontSize: 21
+            }
+        }}>
+            <Stack.Screen 
+                name="Home" 
+                component={TopTabNavigation} 
+                options={{
+                    title: "WhatsApp",
+                    headerRight: () => (
+                        <View style = {styles.headerIconContainer}>
+                            <Ionicons name="md-search" size={22} color="white" />
+                            <MaterialCommunityIcons name="dots-vertical" size={24} color="white" />
+                        </View>
+                    )
+                }}
+            />
+        </Stack.Navigator>
+    )
+}
+
+const styles = StyleSheet.create({
+    headerIconContainer: {
+        flexDirection: 'row', 
+        width: 65, 
+        justifyContent: 'space-between',
+        marginRight: 0
+    }
+})
+
